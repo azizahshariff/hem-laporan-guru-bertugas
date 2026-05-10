@@ -3,113 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D'SiRe e-Laporan Guru Bertugas | SK Simpang Rengam</title>
+    <title>Laporan Guru Bertugas | SK Simpang Rengam</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root {
-            --primary-blue: #1e3a8a;
-            --secondary-green: #10b981;
-            --sidebar-width: 280px;
+        :root { 
+            --blue: #1e3a8a; 
+            --green: #10b981; 
+            --sidebar-width: 280px; 
             --bg-light: #f1f5f9;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            display: flex;
-            background-color: var(--bg-light);
-            height: 100vh;
+        
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            height: 100vh; 
+            background: var(--bg-light); 
             overflow: hidden;
         }
-
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #e2e8f0;
+        
+        /* SIDEBAR STYLING */
+        .sidebar { 
+            width: var(--sidebar-width); 
+            background: white; 
+            border-right: 1px solid #e2e8f0; 
+            display: flex; 
+            flex-direction: column; 
             z-index: 100;
         }
-
-        .sidebar-header {
-            padding: 30px 20px;
-            text-align: center;
-            border-bottom: 1px solid #f1f5f9;
+        
+        .sidebar-header { 
+            padding: 25px; 
+            text-align: center; 
+            border-bottom: 1px solid #f1f5f9; 
         }
-
-        .logo-sekolah { width: 70px; margin-bottom: 15px; }
-
-        .nav-menu {
-            padding: 15px;
-            flex-grow: 1;
-            overflow-y: auto;
+        
+        .logo-sekolah { 
+            width: 80px; 
+            height: auto; 
+            margin-bottom: 10px; 
         }
-
-        .menu-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: #94a3b8;
-            margin: 20px 0 8px 10px;
-            font-weight: bold;
+        
+        .nav-menu { 
+            padding: 15px; 
+            flex-grow: 1; 
+            overflow-y: auto; 
+        }
+        
+        .menu-label { 
+            font-size: 11px; 
+            color: #94a3b8; 
+            font-weight: bold; 
+            margin: 20px 0 10px 10px; 
+            text-transform: uppercase; 
             letter-spacing: 1px;
         }
-
-        .nav-item {
-            padding: 12px 18px;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            color: #475569;
-            text-decoration: none;
-            border-radius: 10px;
-            margin-bottom: 5px;
+        
+        .nav-item { 
+            padding: 12px 15px; 
+            display: flex; 
+            align-items: center; 
+            color: #475569; 
+            text-decoration: none; 
+            border-radius: 10px; 
+            margin-bottom: 5px; 
+            font-size: 14px; 
             transition: 0.3s;
-            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .nav-item:hover, .nav-item.active { 
+            background: #f1f5f9; 
+            color: var(--blue); 
+            font-weight: 600; 
+        }
+        
+        .nav-item i { 
+            margin-right: 12px; 
+            width: 20px; 
+            text-align: center; 
+        }
+        
+        .btn-isi { 
+            background: var(--green); 
+            color: white !important; 
+            font-weight: bold; 
+            margin-bottom: 20px; 
+            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+        }
+        
+        .btn-isi:hover { background: #059669; }
+
+        /* MAIN CONTENT AREA */
+        .main { 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .header { 
+            background: white; 
+            padding: 15px 30px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .header-title {
+            font-weight: bold; 
+            color: var(--blue); 
+            font-size: 18px;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background-color: #f1f5f9;
-            color: var(--primary-blue);
-            font-weight: 600;
-        }
-
-        .nav-item i { margin-right: 15px; width: 20px; text-align: center; }
-
-        .btn-isi-laporan {
-            background-color: var(--secondary-green);
-            color: white !important;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .main-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header-bar {
-            background: white;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
+        .header-identity {
+            font-size: 14px; 
+            color: #475569; 
+            display: flex; 
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
 
-        .iframe-container {
-            flex-grow: 1;
-            padding: 20px;
+        .header-identity img {
+            height: 24px; 
+            width: auto; 
+            margin-right: 10px;
         }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 15px;
-            background: white;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        
+        .container { 
+            flex-grow: 1; 
+            padding: 15px; 
+        }
+        
+        iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            border-radius: 15px; 
+            background: white; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
         }
     </style>
 </head>
@@ -118,43 +149,44 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <img src="logo_sksr.png" alt="Logo SKSR" class="logo-sekolah">
-            <h3 style="margin:0; color:var(--primary-blue);">D'SiRe HUB</h3>
-            <small style="color:#64748b;">SK Simpang Rengam</small>
+            <h3 style="margin:0; color:var(--blue); font-size: 16px;">iHEM-Sistem Laporan Guru Bertugas</h3>
+            <small style="color: #64748b; font-weight: 600;">SK SIMPANG RENGAM</small>
         </div>
         
         <div class="nav-menu">
-            <a href="https://laporangurubertugas.vercel.app" class="nav-item btn-isi-laporan" target="contentFrame">
-                <i class="fas fa-plus-circle"></i> ISI LAPORAN BARU
+            <p class="menu-label">Tindakan</p>
+            <a href="https://laporangurubertugas.vercel.app" class="nav-item btn-isi" target="contentFrame">
+                <i class="fas fa-edit"></i> ISI LAPORAN BARU
             </a>
 
-            <p class="menu-label">Arkib Laporan (PDF)</p>
-            <a href="https://drive.google.com/drive/folders/1acBG0cKktF1Qk2-MMLiNBzHd5i_yaatR?usp=sharing" class="nav-item" target="contentFrame">
-                <i class="fas fa-calendar-check"></i> Semak PDF Laporan
+            <p class="menu-label">Semakan & Analisis</p>
+            <a href="https://drive.google.com/embeddedfolderview?id=1acBG0cKktF1Qk2-MMLiNBzHd5i_yaatR#list" class="nav-item" target="contentFrame">
+                <i class="fas fa-file-pdf"></i> Semak Laporan PDF
             </a>
 
-            <p class="menu-label">Data & Analisis</p>
-            <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSH78MK8CA10BgG4ZjrgQxFEvhD_PyOHFg1nVJID7XNp0vvsLSae5iluY4LkLF2_FOKN5NM_WlLSQdO/pubhtml" class="nav-item" target="contentFrame">
+            <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSH78MK8CA10BgG4ZjrgQxFEvhD_PyOHFg1nVJID7XNp0vvsLSae5iluY4LkLF2_FOKN5NM_WlLSQdO/pubhtml?widget=true&amp;headers=false" class="nav-item" target="contentFrame">
                 <i class="fas fa-chart-line"></i> Analisis & Graf
             </a>
-            <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSH78MK8CA10BgG4ZjrgQxFEvhD_PyOHFg1nVJID7XNp0vvsLSae5iluY4LkLF2_FOKN5NM_WlLSQdO/pubhtml" class="nav-item" target="contentFrame">
-                <i class="fas fa-calendar-times"></i> Tarikh Belum Isi
-            </a>
 
-            <p class="menu-label">Rujukan</p>
+            <p class="menu-label">Maklumat Guru</p>
             <a href="halaman_jadual.html" class="nav-item" target="contentFrame">
-                <i class="fas fa-calendar-days"></i> Jadual Tugasan
+                <i class="fas fa-calendar-alt"></i> Jadual Tugasan Mingguan
             </a>
         </div>
     </div>
 
-    <div class="main-content">
-        <div class="header-bar">
-            <h2 style="margin: 0; font-size: 18px; color: var(--primary-blue);">Pusat Kawalan Laporan Guru Bertugas</h2>
-            <div style="font-size: 14px;"><strong>Cikgu Mohdrafwan</strong> <i class="fas fa-user-circle"></i></div>
+    <div class="main">
+        <div class="header">
+            <span class="header-title">Pusat Kawalan Laporan Guru</span>
+            
+            <div class="header-identity">
+                <img src="ikon_laporan.png" alt="Ikon">
+                <strong>Sistem Pengurusan Digital D'SiRe</strong>
+            </div>
         </div>
-
-        <div class="iframe-container">
-            <iframe name="contentFrame" id="contentFrame" src="https://laporangurubertugas.vercel.app"></iframe>
+        
+        <div class="container">
+            <iframe name="contentFrame" src="https://laporangurubertugas.vercel.app"></iframe>
         </div>
     </div>
 
@@ -169,3 +201,4 @@
     </script>
 </body>
 </html>
+
