@@ -2,31 +2,75 @@
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadual Tugasan Mingguan SKSR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #ffffff; padding: 30px; margin: 0; }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background: #f1f5f9; 
+            padding: 30px; 
+            margin: 0; 
+        }
+        .header-title {
+            text-align: center; 
+            color: #1e3a8a; 
+            margin-bottom: 40px;
+        }
         .section-title {
-            background: #1e3a8a; color: white; padding: 12px 20px;
-            border-radius: 10px; margin: 30px 0 20px 0; font-size: 18px;
+            background: #1e3a8a; 
+            color: white; 
+            padding: 15px 25px;
+            border-radius: 12px; 
+            margin: 40px 0 20px 0; 
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .grid-jadual {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
         }
         .kad {
-            background: #f8fafc; padding: 15px; border-radius: 12px;
-            border: 1px solid #e2e8f0; text-align: center;
+            background: #ffffff; 
+            padding: 10px; 
+            border-radius: 15px;
+            border: 1px solid #e2e8f0; 
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .kad:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
         .kad img {
-            width: 100%; height: 160px; object-fit: cover;
-            border-radius: 8px; border: 1px solid #ddd;
+            width: 100%; 
+            height: auto; /* Tukar dari fixed height ke auto supaya tak terpotong */
+            display: block;
+            border-radius: 10px; 
+            border: 1px solid #f1f5f9;
         }
-        .kad p { font-weight: bold; color: #1e3a8a; margin: 10px 0 0 0; }
+        .kad p { 
+            font-weight: 600; 
+            color: #334155; 
+            margin: 15px 0 5px 0; 
+            font-size: 0.95rem;
+        }
     </style>
 </head>
 <body>
-    <h2 style="text-align: center; color: #1e3a8a;">Jadual Tugasan Mingguan Guru</h2>
+    <div class="header-title">
+        <h2 class="title is-3">Jadual Tugasan Mingguan Guru</h2>
+        <p style="color: #64748b;">SK Simpang Rengam</p>
+    </div>
 
-    <div class="section-title">SESI PAGI</div>
+    <div class="section-title">
+        <i class="fas fa-sun mr-2" style="margin-right: 10px;"></i> SESI PAGI
+    </div>
     <div class="grid-jadual">
         <div class="kad"><img src="pagi_kump1.png"><p>Kumpulan 1 (Pagi)</p></div>
         <div class="kad"><img src="pagi_kump2.png"><p>Kumpulan 2 (Pagi)</p></div>
@@ -34,12 +78,18 @@
         <div class="kad"><img src="pagi_kump4.png"><p>Kumpulan 4 (Pagi)</p></div>
     </div>
 
-    <div class="section-title" style="background: #475569;">SESI PETANG</div>
+    <div class="section-title" style="background: #475569;">
+        <i class="fas fa-moon mr-2" style="margin-right: 10px;"></i> SESI PETANG
+    </div>
     <div class="grid-jadual">
         <div class="kad"><img src="petang_kump1.png"><p>Kumpulan 1 (Petang)</p></div>
         <div class="kad"><img src="petang_kump2.png"><p>Kumpulan 2 (Petang)</p></div>
         <div class="kad"><img src="petang_kump3.png"><p>Kumpulan 3 (Petang)</p></div>
         <div class="kad"><img src="petang_kump4.png"><p>Kumpulan 4 (Petang)</p></div>
+    </div>
+
+    <div style="margin-top: 50px; text-align: center; color: #94a3b8; font-size: 0.8rem;">
+        &copy;D'SiRe Dashboard iHEM - SK Simpang Rengam
     </div>
 </body>
 </html>
