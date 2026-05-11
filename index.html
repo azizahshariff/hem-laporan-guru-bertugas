@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PENGURUSAN HEM - SK Simpang Rengam</title>
+    <title>Pengurusan Unit HEM - SK Simpang Rengam</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -41,7 +41,7 @@
         .menu-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
         .menu-card i { font-size: 2.5rem; margin-bottom: 15px; display: block; }
 
-        /* Status Cards (Reuse from previous) */
+        /* Status Cards */
         .status-container { padding: 40px; max-width: 1100px; margin: 0 auto; }
         .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
         .card-item { background: white; padding: 20px; border-radius: 16px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border-left: 6px solid #cbd5e1; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
@@ -58,7 +58,7 @@
     <div class="sidebar">
         <div class="brand" onclick="showHome()">
             <img src="logo_sksr.png" alt="Logo" class="mb-2" style="width: 60px;" onerror="this.src='https://via.placeholder.com/60?text=SKSR'">
-            <p class="title is-6 mb-0" style="color: var(--primary)">LAPORAN GURU BERTUGAS</p>
+            <p class="title is-6 mb-0" style="color: var(--primary)">Laporan Guru Bertugas</p>
             <p class="is-size-7 has-text-grey">SK SIMPANG RENGAM</p>
         </div>
 
@@ -72,18 +72,18 @@
         </a>
 
         <p class="menu-label">Semakan Status</p>
-        <a class="nav-link" onclick="fetchStatus('harian', 'Keciciran Laporan Harian', this)">
+        <a class="nav-link" id="nav-harian" onclick="fetchStatus('harian', 'Keciciran Laporan Harian', this)">
             <i class="fas fa-exclamation-triangle mr-3" style="color: var(--danger)"></i> Status Harian
         </a>
-        <a class="nav-link" onclick="fetchStatus('perhimpunan', 'Keciciran Perhimpunan', this)">
+        <a class="nav-link" id="nav-perhimpunan" onclick="fetchStatus('perhimpunan', 'Keciciran Perhimpunan', this)">
             <i class="fas fa-bullhorn mr-3" style="color: var(--petang)"></i> Status Perhimpunan
         </a>
 
         <p class="menu-label">Jadual</p>
-        <a class="nav-link" onclick="loadIframe('halaman_jadual.html', this)">
+        <a class="nav-link" id="nav-jadual" onclick="loadIframe('halaman_jadual.html', this)">
             <i class="fas fa-calendar-alt mr-3" style="color: #6366f1"></i> Jadual Bertugas
         </a>
-        <a class="nav-link" onclick="loadIframe('https://drive.google.com/embeddedfolderview?id=1acBG0cKktF1Qk2-MMLiNBzHd5i_yaatR#list', this)">
+        <a class="nav-link" id="nav-arkib" onclick="loadIframe('https://drive.google.com/embeddedfolderview?id=1acBG0cKktF1Qk2-MMLiNBzHd5i_yaatR#list', this)">
             <i class="fas fa-folder-open mr-3" style="color: #f59e0b"></i> Laporan PDF
         </a>
     </div>
@@ -92,7 +92,7 @@
         </div>
 
     <script>
-        // Paparan Muka Depan (Home)
+        // Fungsi untuk Laman Utama
         function showHome() {
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('is-active'));
             document.getElementById('nav-home').classList.add('is-active');
@@ -105,25 +105,25 @@
                     <p class="home-subtitle text-uppercase">SK Simpang Rengam • Laporan Guru Bertugas</p>
                     
                     <div class="home-grid">
-                        <div class="menu-card" onclick="document.getElementById('nav-borang').click()">
+                        <div class="menu-card" onclick="loadIframe('https://laporangurubertugas.vercel.app/', document.getElementById('nav-borang'))">
                             <i class="fas fa-edit" style="color: var(--primary)"></i>
                             <span class="has-text-weight-bold">ISI LAPORAN</span>
                         </div>
-                        <div class="menu-card" onclick="fetchStatus('harian', 'Keciciran Laporan Harian', document.querySelector('.nav-link:nth-child(5)'))">
+                        <div class="menu-card" onclick="fetchStatus('harian', 'Keciciran Laporan Harian', document.getElementById('nav-harian'))">
                             <i class="fas fa-tasks" style="color: var(--danger)"></i>
                             <span class="has-text-weight-bold">STATUS HARIAN</span>
                         </div>
-                        <div class="menu-card" onclick="loadIframe('halaman_jadual.html', document.querySelector('.nav-link:nth-child(8)'))">
+                        <div class="menu-card" onclick="loadIframe('halaman_jadual.html', document.getElementById('nav-jadual'))">
                             <i class="fas fa-calendar-check" style="color: var(--petang)"></i>
                             <span class="has-text-weight-bold">JADUAL BERTUGAS</span>
                         </div>
-                        <div class="menu-card" onclick="loadIframe('https://drive.google.com/embeddedfolderview?id=1acBG0cKktF1Qk2-MMLiNBzHd5i_yaatR#list', document.querySelector('.nav-link:nth-child(9)'))">
+                        <div class="menu-card" onclick="loadIframe('https://drive.google.com/embeddedfolderview?id=1acBG0cKktF1Qk2-MMLiNBzHd5i_yaatR#list', document.getElementById('nav-arkib'))">
                             <i class="fas fa-file-pdf" style="color: #f59e0b"></i>
                             <span class="has-text-weight-bold">ARKIB PDF</span>
                         </div>
                     </div>
                     
-                    <p class="mt-6 is-size-7 has-text-grey-light">Sistem Inovasi Digital: OFFICE D'SiRe © 2026</p>
+                    <p class="mt-6 is-size-7 has-text-grey-light">Sistem Inovasi Digital: D'SiRe © 2026</p>
                 </div>
             `;
         }
@@ -131,16 +131,16 @@
         // Fungsi Load Iframe
         function loadIframe(url, element) {
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('is-active'));
-            element.classList.add('is-active');
+            if(element) element.classList.add('is-active');
             document.getElementById('mainView').innerHTML = `<iframe src="${url}"></iframe>`;
         }
 
-        // Fungsi Fetch Status (Google Sheet)
+        // Fungsi Semakan Status Google Sheets
         async function fetchStatus(type, title, element) {
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('is-active'));
-            element.classList.add('is-active');
+            if(element) element.classList.add('is-active');
             const display = document.getElementById('mainView');
-            display.innerHTML = `<div class="status-container has-text-centered"><p class="mt-6"><i class="fas fa-sync fa-spin fa-2x"></i><br>Menyemak status terkini...</p></div>`;
+            display.innerHTML = `<div class="status-container has-text-centered"><p class="mt-6"><i class="fas fa-sync fa-spin fa-2x"></i><br>Menyemak rekod keciciran...</p></div>`;
 
             try {
                 const sheetId = '1qN7sWgJ0LF6xtFz9r6uHCzapTV1keGqUvygsi_9ggr8';
@@ -176,23 +176,22 @@
 
                 display.innerHTML = `
                     <div class="status-container">
-                        <div class="mb-5"><button class="button is-small is-light" onclick="showHome()"><i class="fas fa-arrow-left mr-2"></i> Kembali ke Home</button></div>
-                        <h1 class="title is-3 mb-6 has-text-centered" style="color: var(--primary)">${title}</h1>
+                        <div class="mb-5"><button class="button is-small is-light" onclick="showHome()"><i class="fas fa-arrow-left mr-2"></i> Kembali</button></div>
+                        <h1 class="title is-4 mb-6 has-text-centered" style="color: var(--primary)">${title}</h1>
                         <div class="status-grid">
                             <div><div class="session-header has-text-weight-bold mb-4" style="color:var(--pagi)"><i class="fas fa-sun mr-2"></i> SESI PAGI</div>
-                                ${listPagi.map(item => `<div class="card-item ${item.status === 'BELUM ISI' ? 'card-danger' : 'card-success'}"><div><span class="has-text-weight-bold is-size-5 d-block">${item.date}</span><br><span class="is-size-7 is-uppercase">${item.day}</span></div><span class="status-pill ${item.status === 'BELUM ISI' ? 'pill-danger' : 'pill-success'}">${item.status}</span></div>`).join('')}
+                                ${listPagi.map(item => `<div class="card-item ${item.status === 'BELUM ISI' ? 'card-danger' : 'card-success'}"><div><span class="has-text-weight-bold is-size-5">${item.date}</span><br><small class="is-uppercase">${item.day}</small></div><span class="status-pill ${item.status === 'BELUM ISI' ? 'pill-danger' : 'pill-success'}">${item.status}</span></div>`).join('')}
                             </div>
                             <div><div class="session-header has-text-weight-bold mb-4" style="color:var(--petang)"><i class="fas fa-moon mr-2"></i> SESI PETANG</div>
-                                ${listPetang.map(item => `<div class="card-item ${item.status === 'BELUM ISI' ? 'card-danger' : 'card-success'}"><div><span class="has-text-weight-bold is-size-5 d-block">${item.date}</span><br><span class="is-size-7 is-uppercase">${item.day}</span></div><span class="status-pill ${item.status === 'BELUM ISI' ? 'pill-danger' : 'pill-success'}">${item.status}</span></div>`).join('')}
+                                ${listPetang.map(item => `<div class="card-item ${item.status === 'BELUM ISI' ? 'card-danger' : 'card-success'}"><div><span class="has-text-weight-bold is-size-5">${item.date}</span><br><small class="is-uppercase">${item.day}</small></div><span class="status-pill ${item.status === 'BELUM ISI' ? 'pill-danger' : 'pill-success'}">${item.status}</span></div>`).join('')}
                             </div>
                         </div>
                     </div>`;
             } catch (e) {
-                display.innerHTML = `<div class="notification is-danger">Gagal memuat data Google Sheet.</div>`;
+                display.innerHTML = `<div class="notification is-danger">Ralat memuatkan data.</div>`;
             }
         }
 
-        // Jalankan Home secara automatik semasa mula
         window.onload = showHome;
     </script>
 </body>
