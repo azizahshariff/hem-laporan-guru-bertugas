@@ -3,64 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D'SiRe Dashboard - iHem SK Simpang Rengam</title>
+    <title>D'Sire Dashboard - iHem SK Simpang Rengam</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: #f0f2f5; height: 100vh; overflow: hidden; display: flex; margin: 0; }
-        .sidebar { background: white; width: 260px; border-right: 1px solid #ddd; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
-        .content { flex-grow: 1; background: white; position: relative; }
+        :root {
+            --primary-blue: #1e3a8a;
+            --danger-red: #e11d48;
+            --bg-light: #f8fafc;
+        }
+        body { background: var(--bg-light); height: 100vh; overflow: hidden; display: flex; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        /* SIDEBAR STYLING */
+        .sidebar { background: white; width: 260px; border-right: 1px solid #e2e8f0; padding: 25px 20px; display: flex; flex-direction: column; flex-shrink: 0; }
+        .brand { text-align: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 20px; margin-bottom: 20px; }
+        .nav-link { display: flex; align-items: center; padding: 12px 15px; color: #475569; border-radius: 10px; margin-bottom: 5px; text-decoration: none; transition: 0.3s; cursor: pointer; }
+        .nav-link:hover { background: #f1f5f9; color: var(--primary-blue); }
+        .is-active { background: #eff6ff; color: var(--primary-blue); font-weight: bold; }
+        .menu-label { margin-top: 25px; font-weight: 800; font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.2px; }
+
+        /* CONTENT STYLING */
+        .content-area { flex-grow: 1; background: white; position: relative; }
         iframe { width: 100%; height: 100%; border: none; }
-        .nav-link { display: flex; align-items: center; padding: 12px; color: #4a4a4a; border-radius: 8px; margin-bottom: 5px; text-decoration: none; transition: 0.2s; cursor: pointer; }
-        .nav-link:hover { background: #f5f5f5; color: #2563eb; }
-        .is-active { background: #eff6ff; color: #2563eb; font-weight: bold; border-left: 4px solid #2563eb; }
-        .menu-label { margin-top: 20px; font-weight: bold; font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
-        .brand-logo { width: 50px; margin-bottom: 10px; }
+
+        /* CICIR DISPLAY STYLING */
+        .cicir-container { padding: 40px; max-width: 800px; margin: 0 auto; height: 100%; overflow-y: auto; }
+        .cicir-card { background: white; border: 1px solid #fee2e2; border-left: 6px solid var(--danger-red); padding: 15px 20px; margin-bottom: 12px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: 0.2s; }
+        .cicir-card:hover { transform: translateX(5px); }
+        .date-info { font-weight: 600; color: #1e293b; font-size: 1.1rem; }
+        .status-badge { background: #ffe4e6; color: var(--danger-red); padding: 5px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="has-text-centered mb-5">
-            <img src="logo_sksr.png" class="brand-logo" onerror="this.style.display='none'">
-            <p class="title is-6">Laporan Guru Bertugas</p>
+        <div class="brand">
+            <img src="logo_sksr.png" style="width: 55px;" onerror="this.style.display='none'">
+            <p class="title is-6 mt-2" style="color: var(--primary-blue);">Laporan Guru Bertugas</p>
             <p class="subtitle is-7">SK Simpang Rengam</p>
         </div>
 
-        <p class="menu-label">Menu Utama</p>
-        <a href="https://laporangurubertugas.vercel.app/" class="nav-link is-active" target="contentFrame">
-            <i class="fas fa-edit mr-3"></i> Isi Laporan
+        <p class="menu-label">Pengurusan</p>
+        <a class="nav-link is-active" onclick="loadPage('iframe', 'https://laporangurubertugas.vercel.app/', this)">
+            <i class="fas fa-edit mr-3"></i> Isi Laporan Guru
         </a>
 
-        <p class="menu-label" style="color: #dc2626;">Laporan Belum Diisi</p>
-        <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSH78MK8CA10BgG4ZjrgQxFEvhD_PyOHFg1nVJID7XNp0vvsLSae5iluY4LkLF2_FOKN5NM_WlLSQdO/pubhtml?gid=164291436&single=true&range=D1:D12&widget=false&headers=true&chrome=false" class="nav-link" target="contentFrame">
+        <p class="menu-label" style="color: var(--danger-red);">Keciciran (Mei 2026)</p>
+        <a class="nav-link" onclick="fetchCicirData('D', 'Keciciran Laporan Harian', this)">
             <i class="fas fa-calendar-times mr-3"></i> Cicir: Harian
         </a>
-        <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSH78MK8CA10BgG4ZjrgQxFEvhD_PyOHFg1nVJID7XNp0vvsLSae5iluY4LkLF2_FOKN5NM_WlLSQdO/pubhtml?gid=164291436&single=true&range=E1:E12&widget=false&headers=true&chrome=false" class="nav-link" target="contentFrame">
+        <a class="nav-link" onclick="fetchCicirData('E', 'Keciciran Perhimpunan', this)">
             <i class="fas fa-users-slash mr-3"></i> Cicir: Perhimpunan
         </a>
 
-        <p class="menu-label">Laporan PDF</p>
-        <a href="https://drive.google.com/embeddedfolderview?id=1acBG0cKktF1Qk2-MMLiNBzHd5i_yaatR#list" class="nav-link" target="contentFrame">
+        <p class="menu-label">Arkib & Jadual</p>
+        <a class="nav-link" onclick="loadPage('iframe', 'https://drive.google.com/embeddedfolderview?id=1acBG0cKktF1Qk2-MMLiNBzHd5i_yaatR#list', this)">
             <i class="fas fa-file-pdf mr-3" style="color: #e11d48;"></i> Laporan PDF
         </a>
-        <a href="halaman_jadual.html" class="nav-link" target="contentFrame">
+        <a class="nav-link" onclick="loadPage('iframe', 'halaman_jadual.html', this)">
             <i class="fas fa-calendar-alt mr-3"></i> Jadual Bertugas
         </a>
     </div>
 
-    <div class="content">
-        <iframe name="contentFrame" src="https://laporangurubertugas.vercel.app/"></iframe>
+    <div class="content-area" id="mainView">
+        <iframe src="https://laporangurubertugas.vercel.app/" id="contentFrame"></iframe>
     </div>
 
     <script>
-        const links = document.querySelectorAll('.nav-link');
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                links.forEach(l => l.classList.remove('is-active'));
-                link.classList.add('is-active');
-            });
-        });
+        // Fungsi tukar halaman iframe
+        function loadPage(type, url, element) {
+            updateActiveState(element);
+            document.getElementById('mainView').innerHTML = `<iframe src="${url}"></iframe>`;
+        }
+
+        function updateActiveState(element) {
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('is-active'));
+            element.classList.add('is-active');
+        }
+
+        // Fungsi fetch data keciciran dari Google Sheets
+        async function fetchCicirData(col, title, element) {
+            updateActiveState(element);
+            const display = document.getElementById('mainView');
+            display.innerHTML = `<div class="cicir-container has-text-centered"><p class="mt-6"><i class="fas fa-sync fa-spin fa-2x mb-3"></i><br>Menyemak rekod dari 4 Mei...</p></div>`;
+
+            try {
+                const sheetId = '1qN7sWgJ0LF6xtFz9r6uHCzapTV1keGqUvygsi_9ggr8';
+                const gid = '164291436';
+                const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+
+                const response = await fetch(csvUrl);
+                const csvData = await response.text();
+                const rows = csvData.split('\n').map(r => r.split(','));
+                
+                const colIdx = (col === 'D') ? 3 : 4;
+                const startDate = new Date(2026, 4, 4); // 4 Mei 2026
+                const today = new Date();
+
+                // Tapis data
+                const filtered = rows.slice(1).filter(row => {
+                    const dateParts = row[0].trim().split('/');
+                    if(dateParts.length !== 3) return false;
+                    
+                    const rowDate = new Date(dateParts[2], dateParts[1]-1, dateParts[0]);
+                    const status = row[colIdx] ? row[colIdx].trim() : "";
+                    
+                    return rowDate >= startDate && rowDate <= today && status === "BELUM ISI";
+                });
+
+                // Susun tarikh terbaru di atas
+                filtered.sort((a, b) => {
+                    const d1 = a[0].split('/'); const d2 = b[0].split('/');
+                    return new Date(d2[2], d2[1]-1, d2[0]) - new Date(d1[2], d1[1]-1, d1[0]);
+                });
+
+                let html = `<div class="cicir-container">
+                    <h2 class="title is-4 mb-1" style="color:var(--danger-red)">${title}</h2>
+                    <p class="subtitle is-7 mb-5">REKOD BERMULA 4 MEI 2026</p>`;
+
+                if (filtered.length === 0) {
+                    html += `<div class="notification is-success is-light has-text-centered mt-6">
+                        <i class="fas fa-check-circle fa-4x mb-4"></i><br>
+                        <strong>Sempurna!</strong><br>Tiada keciciran dikesan bagi bulan ini.</div>`;
+                } else {
+                    filtered.forEach(r => {
+                        html += `<div class="cicir-card">
+                            <div class="date-info"><i class="far fa-calendar-check mr-3" style="color:#f43f5e"></i> ${r[0]}</div>
+                            <div class="status-badge">KECICIRAN</div>
+                        </div>`;
+                    });
+                }
+                html += `</div>`;
+                display.innerHTML = html;
+
+            } catch (err) {
+                display.innerHTML = `<div class="cicir-container"><div class="notification is-danger">Gagal memuatkan data. Sila pastikan Sheets di-Publish ke Web.</div></div>`;
+            }
+        }
     </script>
 </body>
 </html>
