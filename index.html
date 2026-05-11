@@ -3,141 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D'Sire Dashboard - iHem SK Simpang Rengam</title>
+    <title>D'SiRe Dashboard - iHEM SK Simpang Rengam</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-blue: #1e3a8a;
-            --danger-red: #e11d48;
-            --bg-light: #f8fafc;
+        :root { 
+            --primary: #1e3a8a; 
+            --pagi: #f59e0b; 
+            --petang: #6366f1; 
+            --danger: #ef4444; 
+            --success: #10b981;
+            --bg-body: #f1f5f9;
         }
-        body { background: var(--bg-light); height: 100vh; overflow: hidden; display: flex; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: var(--bg-body); height: 100vh; overflow: hidden; display: flex; margin: 0; font-family: 'Inter', sans-serif; }
         
-        /* SIDEBAR STYLING */
-        .sidebar { background: white; width: 260px; border-right: 1px solid #e2e8f0; padding: 25px 20px; display: flex; flex-direction: column; flex-shrink: 0; }
-        .brand { text-align: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 20px; margin-bottom: 20px; }
-        .nav-link { display: flex; align-items: center; padding: 12px 15px; color: #475569; border-radius: 10px; margin-bottom: 5px; text-decoration: none; transition: 0.3s; cursor: pointer; }
-        .nav-link:hover { background: #f1f5f9; color: var(--primary-blue); }
-        .is-active { background: #eff6ff; color: var(--primary-blue); font-weight: bold; }
-        .menu-label { margin-top: 25px; font-weight: 800; font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.2px; }
+        /* Sidebar Styling */
+        .sidebar { background: white; width: 280px; border-right: 1px solid #e2e8f0; padding: 30px 20px; display: flex; flex-direction: column; flex-shrink: 0; box-shadow: 4px 0 10px rgba(0,0,0,0.02); }
+        .brand { text-align: center; margin-bottom: 30px; }
+        .nav-link { display: flex; align-items: center; padding: 14px 18px; color: #64748b; border-radius: 12px; margin-bottom: 8px; text-decoration: none; cursor: pointer; transition: all 0.3s ease; font-weight: 500; }
+        .nav-link:hover { background: #f8fafc; color: var(--primary); transform: translateX(5px); }
+        .is-active { background: #eff6ff; color: var(--primary); font-weight: 700; box-shadow: inset 4px 0 0 var(--primary); }
+        .menu-label { margin-top: 25px; font-weight: 800; font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px; margin-left: 10px; }
 
-        /* CONTENT STYLING */
-        .content-area { flex-grow: 1; background: white; position: relative; }
+        /* Main Area */
+        .content-area { flex-grow: 1; background: var(--bg-body); position: relative; }
         iframe { width: 100%; height: 100%; border: none; }
 
-        /* CICIR DISPLAY STYLING */
-        .cicir-container { padding: 40px; max-width: 800px; margin: 0 auto; height: 100%; overflow-y: auto; }
-        .cicir-card { background: white; border: 1px solid #fee2e2; border-left: 6px solid var(--danger-red); padding: 15px 20px; margin-bottom: 12px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: 0.2s; }
-        .cicir-card:hover { transform: translateX(5px); }
-        .date-info { font-weight: 600; color: #1e293b; font-size: 1.1rem; }
-        .status-badge { background: #ffe4e6; color: var(--danger-red); padding: 5px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; }
+        /* Dashboard Cards Styling */
+        .status-container { padding: 40px; max-width: 1100px; margin: 0 auto; height: 100%; overflow-y: auto; }
+        .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .session-section { background: transparent; }
+        .session-header { font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; color: #334155; }
+        .session-header i { margin-right: 10px; }
+
+        /* Status Card */
+        .card-item { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 16px; 
+            margin-bottom: 15px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border-left: 6px solid #cbd5e1;
+        }
+
+        /* Amaran Merah (Belum Isi) */
+        .card-danger { 
+            border-left-color: var(--danger); 
+            background: #fff5f5;
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* Hijau (Lengkap) */
+        .card-success { border-left-color: var(--success); }
+
+        .date-info { display: flex; flex-direction: column; }
+        .date-main { font-size: 1.1rem; font-weight: 700; color: #1e293b; }
+        .day-sub { font-size: 0.85rem; color: #64748b; text-transform: uppercase; }
+
+        .status-pill { 
+            padding: 8px 16px; 
+            border-radius: 99px; 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            letter-spacing: 0.5px;
+        }
+        .pill-danger { background: var(--danger); color: white; }
+        .pill-success { background: #d1fae5; color: #065f46; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
         <div class="brand">
-            <img src="logo_sksr.png" style="width: 55px;" onerror="this.style.display='none'">
-            <p class="title is-6 mt-2" style="color: var(--primary-blue);">Laporan Guru Bertugas</p>
-            <p class="subtitle is-7">SK Simpang Rengam</p>
+            <p class="title is-5 mb-0" style="color: var(--primary)">LAPORAN GURU BERTUGAS</p>
+            <p class="is-size-7 has-text-grey">SK SIMPANG RENGAM</p>
         </div>
 
-        <p class="menu-label">Pengurusan</p>
-        <a class="nav-link is-active" onclick="loadPage('iframe', 'https://laporangurubertugas.vercel.app/', this)">
-            <i class="fas fa-edit mr-3"></i> Isi Laporan Guru
+        <p class="menu-label">Isi Laporan</p>
+        <a class="nav-link is-active" onclick="loadIframe('https://laporangurubertugas.vercel.app/', this)">
+            <i class="fas fa-pen-nib mr-3"></i> Borang Laporan
         </a>
 
-        <p class="menu-label" style="color: var(--danger-red);">Keciciran (Mei 2026)</p>
-        <a class="nav-link" onclick="fetchCicirData('D', 'Keciciran Laporan Harian', this)">
-            <i class="fas fa-calendar-times mr-3"></i> Cicir: Harian
+        <p class="menu-label">Status Laporan</p>
+        <a class="nav-link" onclick="fetchStatus('harian', 'Keciciran Laporan Harian', this)">
+            <i class="fas fa-exclamation-triangle mr-3" style="color: var(--danger)"></i> Status Harian
         </a>
-        <a class="nav-link" onclick="fetchCicirData('E', 'Keciciran Perhimpunan', this)">
-            <i class="fas fa-users-slash mr-3"></i> Cicir: Perhimpunan
+        <a class="nav-link" onclick="fetchStatus('perhimpunan', 'Keciciran Perhimpunan', this)">
+            <i class="fas fa-bullhorn mr-3" style="color: var(--petang)"></i> Status Perhimpunan
         </a>
 
-        <p class="menu-label">Arkib & Jadual</p>
-        <a class="nav-link" onclick="loadPage('iframe', 'https://drive.google.com/embeddedfolderview?id=1acBG0cKktF1Qk2-MMLiNBzHd5i_yaatR#list', this)">
-            <i class="fas fa-file-pdf mr-3" style="color: #e11d48;"></i> Laporan PDF
-        </a>
-        <a class="nav-link" onclick="loadPage('iframe', 'halaman_jadual.html', this)">
-            <i class="fas fa-calendar-alt mr-3"></i> Jadual Bertugas
+        <p class="menu-label">Laporan</p>
+        <a class="nav-link" onclick="loadIframe('https://drive.google.com/embeddedfolderview?id=1acBG0cKktF1Qk2-MMLiNBzHd5i_yaatR#list', this)">
+            <i class="fas fa-folder-open mr-3" style="color: #f59e0b"></i> Laporan PDF
         </a>
     </div>
 
     <div class="content-area" id="mainView">
-        <iframe src="https://laporangurubertugas.vercel.app/" id="contentFrame"></iframe>
+        <iframe src="https://laporangurubertugas.vercel.app/"></iframe>
     </div>
 
     <script>
-        // Fungsi tukar halaman iframe
-        function loadPage(type, url, element) {
-            updateActiveState(element);
+        function loadIframe(url, element) {
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('is-active'));
+            element.classList.add('is-active');
             document.getElementById('mainView').innerHTML = `<iframe src="${url}"></iframe>`;
         }
 
-        function updateActiveState(element) {
+        async function fetchStatus(type, title, element) {
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('is-active'));
             element.classList.add('is-active');
-        }
-
-        // Fungsi fetch data keciciran dari Google Sheets
-        async function fetchCicirData(col, title, element) {
-            updateActiveState(element);
             const display = document.getElementById('mainView');
-            display.innerHTML = `<div class="cicir-container has-text-centered"><p class="mt-6"><i class="fas fa-sync fa-spin fa-2x mb-3"></i><br>Menyemak rekod dari 4 Mei...</p></div>`;
+            display.innerHTML = `<div class="status-container has-text-centered"><p class="mt-6"><i class="fas fa-circle-notch fa-spin fa-2x"></i><br>Sedang menyemak rekod...</p></div>`;
 
             try {
                 const sheetId = '1qN7sWgJ0LF6xtFz9r6uHCzapTV1keGqUvygsi_9ggr8';
                 const gid = '164291436';
-                const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+                const res = await fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`);
+                const csv = await res.text();
+                const rows = csv.split('\n').map(r => r.split(','));
 
-                const response = await fetch(csvUrl);
-                const csvData = await response.text();
-                const rows = csvData.split('\n').map(r => r.split(','));
-                
-                const colIdx = (col === 'D') ? 3 : 4;
+                const colPagi = (type === 'harian') ? 5 : 7;
+                const colPetang = (type === 'harian') ? 6 : 8;
+
                 const startDate = new Date(2026, 4, 4); // 4 Mei 2026
                 const today = new Date();
 
-                // Tapis data
-                const filtered = rows.slice(1).filter(row => {
-                    const dateParts = row[0].trim().split('/');
-                    if(dateParts.length !== 3) return false;
-                    
-                    const rowDate = new Date(dateParts[2], dateParts[1]-1, dateParts[0]);
-                    const status = row[colIdx] ? row[colIdx].trim() : "";
-                    
-                    return rowDate >= startDate && rowDate <= today && status === "BELUM ISI";
-                });
+                const getDayName = (dateStr) => {
+                    const parts = dateStr.split('/');
+                    const d = new Date(parts[2], parts[1]-1, parts[0]);
+                    return d.toLocaleDateString('ms-MY', { weekday: 'long' });
+                };
 
-                // Susun tarikh terbaru di atas
-                filtered.sort((a, b) => {
-                    const d1 = a[0].split('/'); const d2 = b[0].split('/');
-                    return new Date(d2[2], d2[1]-1, d2[0]) - new Date(d1[2], d1[1]-1, d1[0]);
-                });
+                const filterData = (idx) => {
+                    return rows.slice(1).map(row => {
+                        const dateStr = row[0].trim();
+                        const parts = dateStr.split('/');
+                        if (parts.length !== 3) return null;
+                        const rDate = new Date(parts[2], parts[1]-1, parts[0]);
+                        
+                        if (rDate < startDate || rDate > today) return null;
+                        if (type === 'perhimpunan' && rDate.getDay() !== 1) return null;
 
-                let html = `<div class="cicir-container">
-                    <h2 class="title is-4 mb-1" style="color:var(--danger-red)">${title}</h2>
-                    <p class="subtitle is-7 mb-5">REKOD BERMULA 4 MEI 2026</p>`;
+                        const st = (row[idx] || "").trim();
+                        return { date: dateStr, day: getDayName(dateStr), status: st === "LENGKAP" ? "LENGKAP" : "BELUM ISI" };
+                    }).filter(i => i !== null).reverse();
+                };
 
-                if (filtered.length === 0) {
-                    html += `<div class="notification is-success is-light has-text-centered mt-6">
-                        <i class="fas fa-check-circle fa-4x mb-4"></i><br>
-                        <strong>Sempurna!</strong><br>Tiada keciciran dikesan bagi bulan ini.</div>`;
-                } else {
-                    filtered.forEach(r => {
-                        html += `<div class="cicir-card">
-                            <div class="date-info"><i class="far fa-calendar-check mr-3" style="color:#f43f5e"></i> ${r[0]}</div>
-                            <div class="status-badge">KECICIRAN</div>
-                        </div>`;
-                    });
-                }
-                html += `</div>`;
-                display.innerHTML = html;
+                const listPagi = filterData(colPagi);
+                const listPetang = filterData(colPetang);
 
-            } catch (err) {
-                display.innerHTML = `<div class="cicir-container"><div class="notification is-danger">Gagal memuatkan data. Sila pastikan Sheets di-Publish ke Web.</div></div>`;
+                display.innerHTML = `
+                    <div class="status-container">
+                        <h1 class="title is-3 mb-6 has-text-centered" style="color: var(--primary)">${title}</h1>
+                        <div class="status-grid">
+                            <div class="session-section">
+                                <div class="session-header" style="color: var(--pagi)"><i class="fas fa-sun"></i> SESI PAGI</div>
+                                ${listPagi.map(item => `
+                                    <div class="card-item ${item.status === 'BELUM ISI' ? 'card-danger' : 'card-success'}">
+                                        <div class="date-info">
+                                            <span class="date-main">${item.date}</span>
+                                            <span class="day-sub">${item.day}</span>
+                                        </div>
+                                        <span class="status-pill ${item.status === 'BELUM ISI' ? 'pill-danger' : 'pill-success'}">${item.status}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="session-section">
+                                <div class="session-header" style="color: var(--petang)"><i class="fas fa-moon"></i> SESI PETANG</div>
+                                ${listPetang.map(item => `
+                                    <div class="card-item ${item.status === 'BELUM ISI' ? 'card-danger' : 'card-success'}">
+                                        <div class="date-info">
+                                            <span class="date-main">${item.date}</span>
+                                            <span class="day-sub">${item.day}</span>
+                                        </div>
+                                        <span class="status-pill ${item.status === 'BELUM ISI' ? 'pill-danger' : 'pill-success'}">${item.status}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>`;
+            } catch (e) {
+                display.innerHTML = `<div class="notification is-danger">Ralat menarik data. Pastikan Google Sheets di-Publish sebagai CSV.</div>`;
             }
         }
     </script>
