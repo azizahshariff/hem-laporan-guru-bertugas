@@ -3,79 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D'SiRe Dashboard - iHEM SK Simpang Rengam</title>
+    <title>PENGURUSAN HEM - SK Simpang Rengam</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --primary: #1e3a8a; 
-            --pagi: #f59e0b; 
-            --petang: #6366f1; 
-            --danger: #ef4444; 
-            --success: #10b981;
-            --bg-body: #f1f5f9;
+            --primary: #1e3a8a; --pagi: #f59e0b; --petang: #6366f1; 
+            --danger: #ef4444; --success: #10b981; --bg-body: #f1f5f9;
         }
         body { background: var(--bg-body); height: 100vh; overflow: hidden; display: flex; margin: 0; font-family: 'Inter', sans-serif; }
         
-        /* Sidebar Styling */
+        /* Sidebar */
         .sidebar { background: white; width: 280px; border-right: 1px solid #e2e8f0; padding: 30px 20px; display: flex; flex-direction: column; flex-shrink: 0; box-shadow: 4px 0 10px rgba(0,0,0,0.02); }
-        .brand { text-align: center; margin-bottom: 30px; }
-        .nav-link { display: flex; align-items: center; padding: 14px 18px; color: #64748b; border-radius: 12px; margin-bottom: 8px; text-decoration: none; cursor: pointer; transition: all 0.3s ease; font-weight: 500; }
+        .brand { text-align: center; margin-bottom: 30px; cursor: pointer; }
+        .nav-link { display: flex; align-items: center; padding: 14px 18px; color: #64748b; border-radius: 12px; margin-bottom: 8px; text-decoration: none; cursor: pointer; transition: 0.3s; font-weight: 500; }
         .nav-link:hover { background: #f8fafc; color: var(--primary); transform: translateX(5px); }
-        .is-active { background: #eff6ff; color: var(--primary); font-weight: 700; box-shadow: inset 4px 0 0 var(--primary); }
-        .menu-label { margin-top: 25px; font-weight: 800; font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px; margin-left: 10px; }
+        .is-active { background: #eff6ff; color: var(--primary); font-weight: 700; border-left: 4px solid var(--primary); }
+        .menu-label { margin-top: 20px; font-weight: 800; font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px; }
 
         /* Main Area */
-        .content-area { flex-grow: 1; background: var(--bg-body); position: relative; }
+        .content-area { flex-grow: 1; background: var(--bg-body); position: relative; overflow-y: auto; }
         iframe { width: 100%; height: 100%; border: none; }
 
-        /* Dashboard Cards Styling */
-        .status-container { padding: 40px; max-width: 1100px; margin: 0 auto; height: 100%; overflow-y: auto; }
+        /* Home Page Styling */
+        .home-container { padding: 60px 40px; max-width: 1000px; margin: 0 auto; text-align: center; }
+        .school-logo { width: 120px; margin-bottom: 20px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
+        .home-title { color: var(--primary); font-weight: 800; font-size: 2.5rem; margin-bottom: 5px; }
+        .home-subtitle { color: #64748b; font-size: 1.2rem; font-weight: 500; margin-bottom: 40px; }
+        
+        .home-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .menu-card { 
+            background: white; padding: 30px 20px; border-radius: 20px; 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); transition: 0.3s; 
+            cursor: pointer; border: 1px solid transparent;
+        }
+        .menu-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .menu-card i { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+
+        /* Status Cards (Reuse from previous) */
+        .status-container { padding: 40px; max-width: 1100px; margin: 0 auto; }
         .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .session-section { background: transparent; }
-        .session-header { font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; color: #334155; }
-        .session-header i { margin-right: 10px; }
-
-        /* Status Card */
-        .card-item { 
-            background: white; 
-            padding: 20px; 
-            border-radius: 16px; 
-            margin-bottom: 15px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-            border-left: 6px solid #cbd5e1;
-        }
-
-        /* Amaran Merah (Belum Isi) */
-        .card-danger { 
-            border-left-color: var(--danger); 
-            background: #fff5f5;
-            animation: pulse-red 2s infinite;
-        }
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-        }
-
-        /* Hijau (Lengkap) */
+        .card-item { background: white; padding: 20px; border-radius: 16px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border-left: 6px solid #cbd5e1; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .card-danger { border-left-color: var(--danger); background: #fff5f5; animation: pulse-red 2s infinite; }
+        @keyframes pulse-red { 0% {box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);} 70% {box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);} 100% {box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);} }
         .card-success { border-left-color: var(--success); }
-
-        .date-info { display: flex; flex-direction: column; }
-        .date-main { font-size: 1.1rem; font-weight: 700; color: #1e293b; }
-        .day-sub { font-size: 0.85rem; color: #64748b; text-transform: uppercase; }
-
-        .status-pill { 
-            padding: 8px 16px; 
-            border-radius: 99px; 
-            font-size: 0.75rem; 
-            font-weight: 800; 
-            letter-spacing: 0.5px;
-        }
+        .status-pill { padding: 8px 16px; border-radius: 99px; font-size: 0.75rem; font-weight: 800; }
         .pill-danger { background: var(--danger); color: white; }
         .pill-success { background: #d1fae5; color: #065f46; }
     </style>
@@ -83,17 +56,22 @@
 <body>
 
     <div class="sidebar">
-        <div class="brand">
-            <p class="title is-5 mb-0" style="color: var(--primary)">LAPORAN GURU BERTUGAS</p>
+        <div class="brand" onclick="showHome()">
+            <img src="logo_sksr.png" alt="Logo" class="mb-2" style="width: 60px;" onerror="this.src='https://via.placeholder.com/60?text=SKSR'">
+            <p class="title is-6 mb-0" style="color: var(--primary)">LAPORAN GURU BERTUGAS</p>
             <p class="is-size-7 has-text-grey">SK SIMPANG RENGAM</p>
         </div>
 
-        <p class="menu-label">Isi Laporan</p>
-        <a class="nav-link is-active" onclick="loadIframe('https://laporangurubertugas.vercel.app/', this)">
-            <i class="fas fa-pen-nib mr-3"></i> Borang Laporan
+        <a class="nav-link is-active" id="nav-home" onclick="showHome()">
+            <i class="fas fa-home mr-3"></i> Laman Utama
         </a>
 
-        <p class="menu-label">Status Laporan</p>
+        <p class="menu-label">Pengurusan</p>
+        <a class="nav-link" id="nav-borang" onclick="loadIframe('https://laporangurubertugas.vercel.app/', this)">
+            <i class="fas fa-pen-nib mr-3"></i> Isi Laporan
+        </a>
+
+        <p class="menu-label">Semakan Status</p>
         <a class="nav-link" onclick="fetchStatus('harian', 'Keciciran Laporan Harian', this)">
             <i class="fas fa-exclamation-triangle mr-3" style="color: var(--danger)"></i> Status Harian
         </a>
@@ -101,28 +79,68 @@
             <i class="fas fa-bullhorn mr-3" style="color: var(--petang)"></i> Status Perhimpunan
         </a>
 
-        <p class="menu-label">Laporan</p>
+        <p class="menu-label">Jadual</p>
+        <a class="nav-link" onclick="loadIframe('halaman_jadual.html', this)">
+            <i class="fas fa-calendar-alt mr-3" style="color: #6366f1"></i> Jadual Bertugas
+        </a>
         <a class="nav-link" onclick="loadIframe('https://drive.google.com/embeddedfolderview?id=1acBG0cKktF1Qk2-MMLiNBzHd5i_yaatR#list', this)">
             <i class="fas fa-folder-open mr-3" style="color: #f59e0b"></i> Laporan PDF
         </a>
     </div>
 
     <div class="content-area" id="mainView">
-        <iframe src="https://laporangurubertugas.vercel.app/"></iframe>
-    </div>
+        </div>
 
     <script>
+        // Paparan Muka Depan (Home)
+        function showHome() {
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('is-active'));
+            document.getElementById('nav-home').classList.add('is-active');
+            
+            const display = document.getElementById('mainView');
+            display.innerHTML = `
+                <div class="home-container animate__animated animate__fadeIn">
+                    <img src="logo_sksr.png" class="school-logo" onerror="this.src='https://via.placeholder.com/120?text=LOGO'">
+                    <h1 class="home-title">PENGURUSAN UNIT HEM</h1>
+                    <p class="home-subtitle text-uppercase">SK Simpang Rengam • Laporan Guru Bertugas</p>
+                    
+                    <div class="home-grid">
+                        <div class="menu-card" onclick="document.getElementById('nav-borang').click()">
+                            <i class="fas fa-edit" style="color: var(--primary)"></i>
+                            <span class="has-text-weight-bold">ISI LAPORAN</span>
+                        </div>
+                        <div class="menu-card" onclick="fetchStatus('harian', 'Keciciran Laporan Harian', document.querySelector('.nav-link:nth-child(5)'))">
+                            <i class="fas fa-tasks" style="color: var(--danger)"></i>
+                            <span class="has-text-weight-bold">STATUS HARIAN</span>
+                        </div>
+                        <div class="menu-card" onclick="loadIframe('halaman_jadual.html', document.querySelector('.nav-link:nth-child(8)'))">
+                            <i class="fas fa-calendar-check" style="color: var(--petang)"></i>
+                            <span class="has-text-weight-bold">JADUAL BERTUGAS</span>
+                        </div>
+                        <div class="menu-card" onclick="loadIframe('https://drive.google.com/embeddedfolderview?id=1acBG0cKktF1Qk2-MMLiNBzHd5i_yaatR#list', document.querySelector('.nav-link:nth-child(9)'))">
+                            <i class="fas fa-file-pdf" style="color: #f59e0b"></i>
+                            <span class="has-text-weight-bold">ARKIB PDF</span>
+                        </div>
+                    </div>
+                    
+                    <p class="mt-6 is-size-7 has-text-grey-light">Sistem Inovasi Digital: OFFICE D'SiRe © 2026</p>
+                </div>
+            `;
+        }
+
+        // Fungsi Load Iframe
         function loadIframe(url, element) {
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('is-active'));
             element.classList.add('is-active');
             document.getElementById('mainView').innerHTML = `<iframe src="${url}"></iframe>`;
         }
 
+        // Fungsi Fetch Status (Google Sheet)
         async function fetchStatus(type, title, element) {
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('is-active'));
             element.classList.add('is-active');
             const display = document.getElementById('mainView');
-            display.innerHTML = `<div class="status-container has-text-centered"><p class="mt-6"><i class="fas fa-circle-notch fa-spin fa-2x"></i><br>Sedang menyemak rekod...</p></div>`;
+            display.innerHTML = `<div class="status-container has-text-centered"><p class="mt-6"><i class="fas fa-sync fa-spin fa-2x"></i><br>Menyemak status terkini...</p></div>`;
 
             try {
                 const sheetId = '1qN7sWgJ0LF6xtFz9r6uHCzapTV1keGqUvygsi_9ggr8';
@@ -133,15 +151,8 @@
 
                 const colPagi = (type === 'harian') ? 5 : 7;
                 const colPetang = (type === 'harian') ? 6 : 8;
-
-                const startDate = new Date(2026, 4, 4); // 4 Mei 2026
+                const startDate = new Date(2026, 4, 4);
                 const today = new Date();
-
-                const getDayName = (dateStr) => {
-                    const parts = dateStr.split('/');
-                    const d = new Date(parts[2], parts[1]-1, parts[0]);
-                    return d.toLocaleDateString('ms-MY', { weekday: 'long' });
-                };
 
                 const filterData = (idx) => {
                     return rows.slice(1).map(row => {
@@ -149,12 +160,14 @@
                         const parts = dateStr.split('/');
                         if (parts.length !== 3) return null;
                         const rDate = new Date(parts[2], parts[1]-1, parts[0]);
-                        
                         if (rDate < startDate || rDate > today) return null;
                         if (type === 'perhimpunan' && rDate.getDay() !== 1) return null;
-
                         const st = (row[idx] || "").trim();
-                        return { date: dateStr, day: getDayName(dateStr), status: st === "LENGKAP" ? "LENGKAP" : "BELUM ISI" };
+                        return { 
+                            date: dateStr, 
+                            day: rDate.toLocaleDateString('ms-MY', { weekday: 'long' }), 
+                            status: st === "LENGKAP" ? "LENGKAP" : "BELUM ISI" 
+                        };
                     }).filter(i => i !== null).reverse();
                 };
 
@@ -163,38 +176,24 @@
 
                 display.innerHTML = `
                     <div class="status-container">
+                        <div class="mb-5"><button class="button is-small is-light" onclick="showHome()"><i class="fas fa-arrow-left mr-2"></i> Kembali ke Home</button></div>
                         <h1 class="title is-3 mb-6 has-text-centered" style="color: var(--primary)">${title}</h1>
                         <div class="status-grid">
-                            <div class="session-section">
-                                <div class="session-header" style="color: var(--pagi)"><i class="fas fa-sun"></i> SESI PAGI</div>
-                                ${listPagi.map(item => `
-                                    <div class="card-item ${item.status === 'BELUM ISI' ? 'card-danger' : 'card-success'}">
-                                        <div class="date-info">
-                                            <span class="date-main">${item.date}</span>
-                                            <span class="day-sub">${item.day}</span>
-                                        </div>
-                                        <span class="status-pill ${item.status === 'BELUM ISI' ? 'pill-danger' : 'pill-success'}">${item.status}</span>
-                                    </div>
-                                `).join('')}
+                            <div><div class="session-header has-text-weight-bold mb-4" style="color:var(--pagi)"><i class="fas fa-sun mr-2"></i> SESI PAGI</div>
+                                ${listPagi.map(item => `<div class="card-item ${item.status === 'BELUM ISI' ? 'card-danger' : 'card-success'}"><div><span class="has-text-weight-bold is-size-5 d-block">${item.date}</span><br><span class="is-size-7 is-uppercase">${item.day}</span></div><span class="status-pill ${item.status === 'BELUM ISI' ? 'pill-danger' : 'pill-success'}">${item.status}</span></div>`).join('')}
                             </div>
-                            <div class="session-section">
-                                <div class="session-header" style="color: var(--petang)"><i class="fas fa-moon"></i> SESI PETANG</div>
-                                ${listPetang.map(item => `
-                                    <div class="card-item ${item.status === 'BELUM ISI' ? 'card-danger' : 'card-success'}">
-                                        <div class="date-info">
-                                            <span class="date-main">${item.date}</span>
-                                            <span class="day-sub">${item.day}</span>
-                                        </div>
-                                        <span class="status-pill ${item.status === 'BELUM ISI' ? 'pill-danger' : 'pill-success'}">${item.status}</span>
-                                    </div>
-                                `).join('')}
+                            <div><div class="session-header has-text-weight-bold mb-4" style="color:var(--petang)"><i class="fas fa-moon mr-2"></i> SESI PETANG</div>
+                                ${listPetang.map(item => `<div class="card-item ${item.status === 'BELUM ISI' ? 'card-danger' : 'card-success'}"><div><span class="has-text-weight-bold is-size-5 d-block">${item.date}</span><br><span class="is-size-7 is-uppercase">${item.day}</span></div><span class="status-pill ${item.status === 'BELUM ISI' ? 'pill-danger' : 'pill-success'}">${item.status}</span></div>`).join('')}
                             </div>
                         </div>
                     </div>`;
             } catch (e) {
-                display.innerHTML = `<div class="notification is-danger">Ralat menarik data. Pastikan Google Sheets di-Publish sebagai CSV.</div>`;
+                display.innerHTML = `<div class="notification is-danger">Gagal memuat data Google Sheet.</div>`;
             }
         }
+
+        // Jalankan Home secara automatik semasa mula
+        window.onload = showHome;
     </script>
 </body>
 </html>
